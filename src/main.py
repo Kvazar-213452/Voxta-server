@@ -1,7 +1,7 @@
+import threading
 from flask import Flask
 from routes.web_routes import web
-from tcp_server import start_socket_server
-import threading
+from services.client_server import connect_to_socket_server
 
 app = Flask(
     __name__,
@@ -11,6 +11,17 @@ app = Flask(
 
 app.register_blueprint(web)
 
+def start_socket_client():
+    try:
+        connect_to_socket_server()
+    except Exception as e:
+        print(f"[Socket client error]: {e}")
+
 if __name__ == "__main__":
-    threading.Thread(target=start_socket_server, daemon=True).start()
-    app.run(debug=True, port=4444)
+    socket_thread = threading.Thread(target=start_socket_client, daemon=True)
+    socket_thread.start()
+    
+    try:
+        app.run(debug=True, port=4444, use_reloader=False)
+    except KeyboardInterrupt:
+        pass
