@@ -2,6 +2,7 @@ import threading
 from flask import Flask
 from routes.web_routes import web
 from services.client_server import connect_to_socket_server
+from utils.crypto_utils.SPX_CriptoLite import init_key_lite
 
 app = Flask(
     __name__,
@@ -10,6 +11,7 @@ app = Flask(
 )
 
 app.register_blueprint(web)
+init_key_lite()
 
 def start_socket_client():
     try:
