@@ -14,7 +14,7 @@ def setup_events(sio: socketio.Client) -> None:
         try:
             decrypted_message = json.loads(decrypted_raw)
         except json.JSONDecodeError:
-            log_func("Помилка декодування JSON після дешифрування")
+            log_func("error JSON")
             return
 
         while True:

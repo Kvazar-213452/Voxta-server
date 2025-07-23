@@ -19,6 +19,6 @@ def get_chats() -> list[dict]:
                     config_data = json.load(f)
                     chats.append(transform_avatar(config_data))
             except Exception as e:
-                print(f"Помилка при читанні {config_path}: {e}")
+                print(f"error read {config_path}: {e}")
 
     return chats
